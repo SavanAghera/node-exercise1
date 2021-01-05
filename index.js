@@ -18,12 +18,12 @@ app.use('/api/users/',Userroute);
 app.use('/api/auth',authRoute);
 app.use(helmet());
 app.use(compression());
-const dbpass = "nodeexercise";
+const dbpass = config.get('dbpass');
 mongoose.connect(`mongodb+srv://SavanPatel:${dbpass}@cluster0.vv3vp.mongodb.net/exercise?retryWrites=true&w=majority`,{useNewUrlParser:true, useUnifiedTopology:true})
 .then(()=>console.log("connected .... to exercise1...."))
 .catch(e=>console.log(e.message));
 
-app.get("/",(req,res)=>{res.send("hiii")});
+app.get("/",(req,res)=>{res.send("<h1>This is Savan Aghera</h1>")});
 
 
 const port = process.env.PORT || 3000 ;
