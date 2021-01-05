@@ -1,14 +1,29 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const config = require('config');
+const Userroute = require('./route/users');
+const authRoute = require('./route/auth');
+const helmet = require('helmet');
+const compression= require('compression')
 
-app.use(express.json())
 
-mongoose.connect('mongodb://localhost/exercise1',{useNewUrlParser:true, useUnifiedTopology:true})
+if(!config.get('jwtKey') && !config.get('dbpass')){
+    console.error("error jwtPrivateKey  or dbpass not defined");
+    process.exit(1);
+}
+
+app.use(express.json());
+app.use('/api/users/',Userroute);
+app.use('/api/auth',authRoute);
+app.use(helmet());
+app.use(compression());
+const dbpass = "nodeexercise";
+mongoose.connect(`mongodb+srv://SavanPatel:${dbpass}@cluster0.vv3vp.mongodb.net/exercise?retryWrites=true&w=majority`,{useNewUrlParser:true, useUnifiedTopology:true})
 .then(()=>console.log("connected .... to exercise1...."))
 .catch(e=>console.log(e.message));
 
-app.get("/",(req,res)=>{res.send("hiii")})
+app.get("/",(req,res)=>{res.send("hiii")});
 
 
 const port = process.env.PORT || 3000 ;

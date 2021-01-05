@@ -1,0 +1,4 @@
+{
+    "jwtKey":"exercise_jwtkey",
+    "dbpass":"db_pass"
+}
