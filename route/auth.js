@@ -3,8 +3,9 @@ const route = express.Router();
 const bcrypt = require('bcryptjs');
 const {User} = require('../models/user');
 const Joi = require('joi');
+const asyncmiddleware = require('../middleware/asyncmiddleware');
 
-route.post('/',async (req,res)=>{
+route.post('/',asyncmiddleware( async (req,res)=>{
     const  {error} = validateAuth(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -16,7 +17,7 @@ route.post('/',async (req,res)=>{
 
     let token = user.getUserAuth();
     res.header('x-auth', token).send('login success');
-});
+}));
 
 function validateAuth(auth) {
     const schema = Joi.object({

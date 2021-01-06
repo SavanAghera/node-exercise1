@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const Userroute = require('./route/users');
 const authRoute = require('./route/auth');
+const error = require('./middleware/error');
 const helmet = require('helmet');
 const compression= require('compression')
 
@@ -18,6 +19,7 @@ app.use('/api/users/',Userroute);
 app.use('/api/auth',authRoute);
 app.use(helmet());
 app.use(compression());
+app.use(error);
 const dbpass = config.get('dbpass');
 mongoose.connect(`mongodb+srv://SavanPatel:${dbpass}@cluster0.vv3vp.mongodb.net/exercise?retryWrites=true&w=majority`,{useNewUrlParser:true, useUnifiedTopology:true})
 .then(()=>console.log("connected .... to exercise1...."))
