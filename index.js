@@ -16,10 +16,11 @@ if(!config.get('jwtKey') && !config.get('dbpass')){
 }
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/users/',Userroute);
 app.use('/api/auth',authRoute);
 app.use(helmet());
-app.use(cors());
+
 app.use(compression());
 app.use(error);
 const dbpass = config.get('dbpass');
