@@ -6,7 +6,8 @@ const Userroute = require('./route/users');
 const authRoute = require('./route/auth');
 const error = require('./middleware/error');
 const helmet = require('helmet');
-const compression= require('compression')
+const compression= require('compression');
+const cors = require('cors');
 
 
 if(!config.get('jwtKey') && !config.get('dbpass')){
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/users/',Userroute);
 app.use('/api/auth',authRoute);
 app.use(helmet());
+app.use(cors());
 app.use(compression());
 app.use(error);
 const dbpass = config.get('dbpass');
