@@ -14,12 +14,13 @@ route.get('/me',authmiddleware, asyncmiddleware( async (req,res)=>{
 }));
 
 route.post('/', asyncmiddleware( async (req,res)=>{
+    console.log("post"+JSON.stringify(req.body));
     const {error} = validateUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({email:req.body.email});
     if(user) return res.status(400).send('user already exists')
-
+    
 
 
     user = new User(_.pick(req.body,["name","email","password"]));
